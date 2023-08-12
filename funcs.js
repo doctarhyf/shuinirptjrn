@@ -208,10 +208,6 @@ const SUP_NAMES = {
 };
 
 function drawTable(data) {
-  drawNbrCamions(data);
-  drawDiffChargement(data);
-  drawMont(data);
-
   drawLogo();
   drawTitle();
   drawVLines();
@@ -219,6 +215,10 @@ function drawTable(data) {
   drawLables();
 
   const teams = data[3].split("");
+
+  drawNbrCamions(data);
+  drawDiffChargement(data);
+  drawMont(data);
 
   drawVerticalText(SUP_NAMES[teams[0]], gap * 15, gap * 12.5);
   drawVerticalText(SUP_NAMES[teams[1]], -gap * 12, gap * 32);
