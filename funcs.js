@@ -118,7 +118,88 @@ function drawHLines() {
   dl(ml, mt * 3 * 3 + rowh, pw - mr, mt * 3 * 3 + rowh);
 }
 
+function drawText(d, x, y) {
+  doc.text(d, x, y);
+}
+
+function drawNbrCamions(data) {
+  const shifts = {
+    m: { xsacs: gap * 38, ysacs: gap * 13, xt: gap * 38, yt: gap * 15 },
+    p: { xsacs: gap * 38, ysacs: gap * 13, xt: gap * 38, yt: gap * 15 },
+    n: { xsacs: gap * 38, ysacs: gap * 13, xt: gap * 38, yt: gap * 15 },
+  };
+
+  drawText(data[0] + " S", shifts.m.xsacs, shifts.m.ysacs);
+  drawText(data[0] / 20 + " T", shifts.m.xt, shifts.m.yt);
+
+  drawText(data[1] + " S", shifts.m.xsacs, shifts.m.ysacs + gap * 16);
+  drawText(data[1] / 20 + " T", shifts.m.xt, shifts.m.yt + gap * 16);
+
+  drawText(data[2] + " S", shifts.m.xsacs, shifts.m.ysacs + gap * 40);
+  drawText(data[2] / 20 + " T", shifts.m.xt, shifts.m.yt + gap * 40);
+}
+
+function calcBonus(t) {
+  return t / 20 + " - 600 =\n\n   " + (t / 20 - 600) + " T";
+}
+
+const shifts = {
+  m: { xsacs: gap * 44, ysacs: gap * 13, xt: gap * 38, yt: gap * 15 },
+  p: { xsacs: gap * 44, ysacs: gap * 13, xt: gap * 38, yt: gap * 15 },
+  n: { xsacs: gap * 44, ysacs: gap * 13, xt: gap * 38, yt: gap * 15 },
+};
+
+function drawDiffChargement(data) {
+  drawText(calcBonus(data[0]), shifts.m.xsacs, shifts.m.ysacs);
+
+  drawText(calcBonus(data[1]), shifts.m.xsacs, shifts.m.ysacs + gap * 16);
+
+  drawText(calcBonus(data[2]), shifts.m.xsacs, shifts.m.ysacs + gap * 40);
+}
+
+function calcMt(t) {
+  return t / 20 - 600;
+}
+
+function drawMont(data) {
+  const mtm = calcMt(data[0]);
+  const mtp = calcMt(data[1]);
+  const mtn = calcMt(data[2]);
+  const tot = mtm + mtp + mtn;
+
+  drawText(mtm + " T", shifts.m.xsacs + gap * 10, shifts.m.ysacs);
+  drawText(
+    mtm * 1000 + " FC",
+    shifts.m.xsacs + gap * 10,
+    shifts.m.ysacs + gap * 12
+  );
+
+  drawText(mtp + " T", shifts.m.xsacs + gap * 10, shifts.m.ysacs + gap * 16);
+  drawText(
+    mtp * 1000 + " FC",
+    shifts.m.xsacs + gap * 10,
+    shifts.m.ysacs + gap * 36
+  );
+
+  drawText(mtn + " T", shifts.m.xsacs + gap * 10, shifts.m.ysacs + gap * 40);
+  drawText(
+    mtn * 1000 + " FC",
+    shifts.m.xsacs + gap * 10,
+    shifts.m.ysacs + gap * 55
+  );
+
+  drawText(
+    tot * 1000 + " FC",
+    shifts.m.xsacs + gap * 10,
+    shifts.m.ysacs + gap * 60
+  );
+}
+
 function drawTable(data) {
+  drawNbrCamions(data);
+  drawDiffChargement(data);
+  drawMont(data);
+
   drawLogo();
   drawTitle();
   drawVLines();

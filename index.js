@@ -1,6 +1,6 @@
 const funcs = require("./funcs");
 
-//const data
+const data = [14360, 16910, 15020];
 
-const dt = funcs.drawTable;
-dt();
+const drawTable = funcs.drawTable;
+drawTable(data);
