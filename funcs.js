@@ -122,6 +122,11 @@ function drawText(d, x, y) {
   doc.text(d, x, y);
 }
 
+function drawVerticalText(text, px, py) {
+  doc.rotate(90, { origin: [px, py] }).text(text, px, py);
+  doc.rotate(-90);
+}
+
 function drawNbrCamions(data) {
   const shifts = {
     m: { xsacs: gap * 38, ysacs: gap * 13, xt: gap * 38, yt: gap * 15 },
@@ -157,14 +162,14 @@ function drawDiffChargement(data) {
   drawText(calcBonus(data[2]), shifts.m.xsacs, shifts.m.ysacs + gap * 40);
 }
 
-function calcMt(t) {
+function calcMontant(t) {
   return t / 20 - 600;
 }
 
 function drawMont(data) {
-  const mtm = calcMt(data[0]);
-  const mtp = calcMt(data[1]);
-  const mtn = calcMt(data[2]);
+  const mtm = calcMontant(data[0]);
+  const mtp = calcMontant(data[1]);
+  const mtn = calcMontant(data[2]);
   const tot = mtm + mtp + mtn;
 
   drawText(mtm + " T", shifts.m.xsacs + gap * 10, shifts.m.ysacs);
@@ -195,6 +200,13 @@ function drawMont(data) {
   );
 }
 
+const SUP_NAMES = {
+  A: "Albert KANKOBWE",
+  B: "Bertin KAYEMBE",
+  C: "Serge KAZALI",
+  D: "Amedee KATANGA",
+};
+
 function drawTable(data) {
   drawNbrCamions(data);
   drawDiffChargement(data);
@@ -205,6 +217,13 @@ function drawTable(data) {
   drawVLines();
   drawHLines();
   drawLables();
+
+  const teams = data[3].split("");
+
+  drawVerticalText(SUP_NAMES[teams[0]], gap * 15, gap * 12.5);
+  drawVerticalText(SUP_NAMES[teams[1]], -gap * 12, gap * 32);
+  drawVerticalText(SUP_NAMES[teams[2]], -gap * 32, gap * 12);
+
   doc.end();
 }
 
